@@ -19,6 +19,7 @@ type AtlasUsersService interface {
 	Get(context.Context, string) (*AtlasUser, *Response, error)
 	GetByName(context.Context, string) (*AtlasUser, *Response, error)
 	Create(context.Context, *AtlasUser) (*AtlasUser, *Response, error)
+	Update(context.Context, string, *AtlasUser) (*AtlasUser, *Response, error)
 }
 
 // AtlasUsersServiceOp handles communication with the AtlasUsers related methods of the
@@ -135,6 +136,30 @@ func (s *AtlasUsersServiceOp) Create(ctx context.Context, createRequest *AtlasUs
 	}
 
 	req, err := s.Client.NewRequest(ctx, http.MethodPost, "users", createRequest)
+	if err != nil {
+		return nil, nil, err
+	}
+
+	root := new(AtlasUser)
+	resp, err := s.Client.Do(ctx, req, root)
+	if err != nil {
+		return nil, resp, err
+	}
+
+	return root, resp, err
+}
+
+// Update updates an Atlas User.
+//
+// See more: https://docs.atlas.mongodb.com/reference/api/user-update/
+func (s *AtlasUsersServiceOp) Update(ctx context.Context, id string, updateRequest *AtlasUser) (*AtlasUser, *Response, error) {
+	if updateRequest == nil {
+		return nil, nil, NewArgError("updateRequest", "cannot be nil")
+	}
+
+	path := fmt.Sprintf("users/%s", id)
+
+	req, err := s.Client.NewRequest(ctx, http.MethodPatch, path, updateRequest)
 	if err != nil {
 		return nil, nil, err
 	}
