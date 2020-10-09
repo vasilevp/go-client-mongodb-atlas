@@ -19,7 +19,7 @@ type AtlasUsersService interface {
 	Get(context.Context, string) (*AtlasUser, *Response, error)
 	GetByName(context.Context, string) (*AtlasUser, *Response, error)
 	Create(context.Context, *AtlasUser) (*AtlasUser, *Response, error)
-	Update(context.Context, string, *AtlasUser) (*AtlasUser, *Response, error)
+	Update(context.Context, string, []AtlasRole) (*AtlasUser, *Response, error)
 }
 
 // AtlasUsersServiceOp handles communication with the AtlasUsers related methods of the
@@ -152,12 +152,16 @@ func (s *AtlasUsersServiceOp) Create(ctx context.Context, createRequest *AtlasUs
 // Update updates an Atlas User.
 //
 // See more: https://docs.atlas.mongodb.com/reference/api/user-update/
-func (s *AtlasUsersServiceOp) Update(ctx context.Context, id string, updateRequest *AtlasUser) (*AtlasUser, *Response, error) {
-	if updateRequest == nil {
-		return nil, nil, NewArgError("updateRequest", "cannot be nil")
+func (s *AtlasUsersServiceOp) Update(ctx context.Context, id string, roles []AtlasRole) (*AtlasUser, *Response, error) {
+	if roles == nil {
+		return nil, nil, NewArgError("roles", "cannot be nil")
 	}
 
 	path := fmt.Sprintf("users/%s", id)
+
+	updateRequest := struct {
+		Roles []AtlasRole `json:"roles"`
+	}{roles}
 
 	req, err := s.Client.NewRequest(ctx, http.MethodPatch, path, updateRequest)
 	if err != nil {
