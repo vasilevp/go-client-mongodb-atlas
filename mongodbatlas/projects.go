@@ -33,6 +33,7 @@ type ProjectsService interface {
 	GetProjectTeamsAssigned(context.Context, string) (*TeamsAssigned, *Response, error)
 	AddTeamsToProject(context.Context, string, []*ProjectTeam) (*TeamsAssigned, *Response, error)
 	RemoveUserFromProject(context.Context, string, string) (*Response, error)
+	GetAllUsers(context.Context, string) (*Users, *Response, error)
 }
 
 // ProjectsServiceOp handles communication with the Projects related methods of the
@@ -58,7 +59,7 @@ type Projects struct {
 	TotalCount int        `json:"totalCount"`
 }
 
-// Result is part og TeamsAssigned structure
+// Result is part of TeamsAssigned structure
 type Result struct {
 	Links     []*Link  `json:"links"`
 	RoleNames []string `json:"roleNames"`
@@ -76,6 +77,12 @@ type TeamsAssigned struct {
 	Links      []*Link   `json:"links"`
 	Results    []*Result `json:"results"`
 	TotalCount int       `json:"totalCount"`
+}
+
+type Users struct {
+	Links      []*Link      `json:"links"`
+	Results    []*AtlasUser `json:"results"`
+	TotalCount int          `json:"totalCount"`
 }
 
 // GetAllProjects gets all project.
@@ -263,4 +270,28 @@ func (s *ProjectsServiceOp) RemoveUserFromProject(ctx context.Context, projectID
 
 	resp, err := s.Client.Do(ctx, req, nil)
 	return resp, err
+}
+
+// GetAllUsers gets all the users assigned to a project.
+//
+// See more: https://docs.atlas.mongodb.com/reference/api/user-get-all/
+func (s *ProjectsServiceOp) GetAllUsers(ctx context.Context, projectID string) (*Users, *Response, error) {
+	if projectID == "" {
+		return nil, nil, NewArgError("projectID", "must be set")
+	}
+
+	path := fmt.Sprintf("%s/%s/users", projectBasePath, projectID)
+
+	req, err := s.Client.NewRequest(ctx, http.MethodGet, path, nil)
+	if err != nil {
+		return nil, nil, err
+	}
+
+	root := new(Users)
+	resp, err := s.Client.Do(ctx, req, root)
+	if err != nil {
+		return nil, resp, err
+	}
+
+	return root, resp, err
 }
