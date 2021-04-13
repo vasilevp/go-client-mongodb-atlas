@@ -1,6 +1,6 @@
 # go-client-mongodb-atlas
-[![GoDoc](https://img.shields.io/static/v1?label=godoc&message=reference&color=blue)](https://pkg.go.dev/go.mongodb.org/atlas/mongodbatlas)
-[![Build Status](https://travis-ci.org/mongodb/go-client-mongodb-atlas.svg?branch=master)](https://travis-ci.org/mongodb/go-client-mongodb-atlas)
+[![PkgGoDev](https://pkg.go.dev/badge/go.mongodb.org/atlas)](https://pkg.go.dev/go.mongodb.org/atlas)
+![CI](https://github.com/mongodb/go-client-mongodb-atlas/workflows/CI/badge.svg)
 
 A Go HTTP client for the [MongoDB Atlas API](https://docs.atlas.mongodb.com/api/).
 
@@ -74,7 +74,7 @@ To release a new version, first ensure that [Version](./mongodbatlas/mongodbatla
 ## Roadmap
 
 This library is being initially developed for [mongocli](https://github.com/mongodb/mongocli),
-[Atlas Terraform Provider](https://github.com/terraform-providers/terraform-provider-mongodbatlas), 
+[Atlas Terraform Provider](https://github.com/mongodb/terraform-provider-mongodbatlas), 
 [Atlas Vault Plugin](https://github.com/hashicorp/vault-plugin-secrets-mongodbatlas), and 
 [Atlas Cloudformation Provider](https://github.com/mongodb/mongodbatlas-cloudformation-resources)
 so API methods will likely be implemented in the order that they are

@@ -1,3 +1,17 @@
+// Copyright 2021 MongoDB Inc
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//      http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+
 package mongodbatlas
 
 import (
@@ -82,6 +96,8 @@ type AwsKms struct {
 	SecretAccessKey     string `json:"secretAccessKey,omitempty"`     // The IAM secret access key with permissions to access the customer master key specified by customerMasterKeyID.
 	CustomerMasterKeyID string `json:"customerMasterKeyID,omitempty"` // The AWS customer master key used to encrypt and decrypt the MongoDB master keys.
 	Region              string `json:"region,omitempty"`              // The AWS region in which the AWS customer master key exists: CA_CENTRAL_1, US_EAST_1, US_EAST_2, US_WEST_1, US_WEST_2, SA_EAST_1
+	RoleID              string `json:"roleId,omitempty"`              // ID of an AWS IAM role authorized to manage an AWS customer master key.
+	Valid               *bool  `json:"valid,omitempty"`               // Specifies whether the encryption key set for the provider is valid and may be used to encrypt and decrypt data.
 }
 
 // AzureKeyVault specifies Azure Key Vault configuration details and whether Encryption at Rest is enabled for an Atlas project.
@@ -105,6 +121,7 @@ type GoogleCloudKms struct {
 }
 
 // Create takes one on-demand snapshot. Atlas takes on-demand snapshots immediately, unlike scheduled snapshots which occur at regular intervals.
+//
 // See more: https://docs.atlas.mongodb.com/reference/api/enable-configure-encryptionatrest/
 func (s *EncryptionsAtRestServiceOp) Create(ctx context.Context, createRequest *EncryptionAtRest) (*EncryptionAtRest, *Response, error) {
 	if createRequest == nil {
@@ -130,6 +147,7 @@ func (s *EncryptionsAtRestServiceOp) Create(ctx context.Context, createRequest *
 }
 
 // Get retrieves the current configuration for Encryption at Rest for an Atlas project.
+//
 // See more: https://docs.atlas.mongodb.com/reference/api/get-configuration-encryptionatrest/
 func (s *EncryptionsAtRestServiceOp) Get(ctx context.Context, groupID string) (*EncryptionAtRest, *Response, error) {
 	if groupID == "" {
@@ -153,6 +171,7 @@ func (s *EncryptionsAtRestServiceOp) Get(ctx context.Context, groupID string) (*
 }
 
 // Delete disable the AWS, Azure and Google Encryption at Rest.
+//
 // See more: https://docs.atlas.mongodb.com/reference/api/enable-configure-encryptionatrest/
 func (s *EncryptionsAtRestServiceOp) Delete(ctx context.Context, groupID string) (*Response, error) {
 	if groupID == "" {

@@ -1,3 +1,17 @@
+// Copyright 2021 MongoDB Inc
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//      http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+
 package mongodbatlas
 
 import (
@@ -11,6 +25,7 @@ const apiKeysPath = "orgs/%s/apiKeys"
 
 // APIKeysService is an interface for interfacing with the APIKeys
 // endpoints of the MongoDB Atlas API.
+//
 // See more: https://docs.atlas.mongodb.com/reference/api/apiKeys/
 type APIKeysService interface {
 	List(context.Context, string, *ListOptions) ([]APIKey, *Response, error)
@@ -56,6 +71,7 @@ type apiKeysResponse struct {
 }
 
 // List all API-KEY in the organization associated to {ORG-ID}.
+//
 // See more: https://docs.atlas.mongodb.com/reference/api/apiKeys-orgs-get-all/
 func (s *APIKeysServiceOp) List(ctx context.Context, orgID string, listOptions *ListOptions) ([]APIKey, *Response, error) {
 	path := fmt.Sprintf(apiKeysPath, orgID)
@@ -85,6 +101,7 @@ func (s *APIKeysServiceOp) List(ctx context.Context, orgID string, listOptions *
 }
 
 // Get gets the APIKey specified to {API-KEY-ID} from the organization associated to {ORG-ID}.
+//
 // See more: https://docs.atlas.mongodb.com/reference/api/apiKeys-orgs-get-one/
 func (s *APIKeysServiceOp) Get(ctx context.Context, orgID, apiKeyID string) (*APIKey, *Response, error) {
 	if apiKeyID == "" {
@@ -110,6 +127,7 @@ func (s *APIKeysServiceOp) Get(ctx context.Context, orgID, apiKeyID string) (*AP
 }
 
 // Create an API Key by the {ORG-ID}.
+//
 // See more: https://docs.atlas.mongodb.com/reference/api/apiKeys-orgs-create-one/
 func (s *APIKeysServiceOp) Create(ctx context.Context, orgID string, createRequest *APIKeyInput) (*APIKey, *Response, error) {
 	if createRequest == nil {
@@ -132,7 +150,8 @@ func (s *APIKeysServiceOp) Create(ctx context.Context, orgID string, createReque
 	return root, resp, err
 }
 
-// Update a API Key in the organization associated to {ORG-ID}
+// Update a API Key in the organization associated to {ORG-ID}.
+//
 // See more: https://docs.atlas.mongodb.com/reference/api/apiKeys-orgs-update-one/
 func (s *APIKeysServiceOp) Update(ctx context.Context, orgID, apiKeyID string, updateRequest *APIKeyInput) (*APIKey, *Response, error) {
 	if updateRequest == nil {
@@ -157,6 +176,7 @@ func (s *APIKeysServiceOp) Update(ctx context.Context, orgID, apiKeyID string, u
 }
 
 // Delete the API Key specified to {API-KEY-ID} from the organization associated to {ORG-ID}.
+//
 // See more: https://docs.atlas.mongodb.com/reference/api/apiKey-delete-one-apiKey/
 func (s *APIKeysServiceOp) Delete(ctx context.Context, orgID, apiKeyID string) (*Response, error) {
 	if apiKeyID == "" {

@@ -1,3 +1,17 @@
+// Copyright 2021 MongoDB Inc
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//      http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+
 package mongodbatlas
 
 import (
@@ -10,6 +24,7 @@ const privateIPModePath = "groups/%s/privateIpMode"
 
 // PrivateIPModeService is an interface for interfacing with the PrivateIpMode
 // endpoints of the MongoDB Atlas API.
+//
 // See more: https://docs.atlas.mongodb.com/reference/api/get-private-ip-mode-for-project/
 type PrivateIPModeService interface {
 	Get(context.Context, string) (*PrivateIPMode, *Response, error)
@@ -28,6 +43,7 @@ type PrivateIPMode struct {
 }
 
 // Get Verify Connect via Peering Only Mode from the project associated to {GROUP-ID}.
+//
 // See more: https://docs.atlas.mongodb.com/reference/api/get-private-ip-mode-for-project/
 func (s *PrivateIPModeServiceOp) Get(ctx context.Context, groupID string) (*PrivateIPMode, *Response, error) {
 	path := fmt.Sprintf(privateIPModePath, groupID)
@@ -46,7 +62,8 @@ func (s *PrivateIPModeServiceOp) Get(ctx context.Context, groupID string) (*Priv
 	return root, resp, err
 }
 
-// Update connection via Peering Only Mode in the project associated to {GROUP-ID}
+// Update connection via Peering Only Mode in the project associated to {GROUP-ID}.
+//
 // See more: https://docs.atlas.mongodb.com/reference/api/set-private-ip-mode-for-project/
 func (s *PrivateIPModeServiceOp) Update(ctx context.Context, groupID string, updateRequest *PrivateIPMode) (*PrivateIPMode, *Response, error) {
 	if updateRequest == nil {

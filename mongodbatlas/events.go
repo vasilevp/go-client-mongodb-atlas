@@ -1,3 +1,17 @@
+// Copyright 2021 MongoDB Inc
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//      http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+
 package mongodbatlas
 
 import (
@@ -6,11 +20,14 @@ import (
 	"net/http"
 )
 
-const eventsPathProjects = "groups/%s/events"
-const eventsPathOrganization = "orgs/%s/events"
+const (
+	eventsPathProjects     = "groups/%s/events"
+	eventsPathOrganization = "orgs/%s/events"
+)
 
 // EventsService is an interface for interfacing with the Events
 // endpoints of the MongoDB Atlas API.
+//
 // See more: https://docs.atlas.mongodb.com/reference/api/events/
 type EventsService interface {
 	ListOrganizationEvents(context.Context, string, *EventListOptions) (*EventResponse, *Response, error)
@@ -74,6 +91,7 @@ type EventListOptions struct {
 }
 
 // ListOrganizationEvents lists all events in the organization associated to {ORG-ID}.
+//
 // See more: https://docs.atlas.mongodb.com/reference/api/events-orgs-get-all/
 func (s *EventsServiceOp) ListOrganizationEvents(ctx context.Context, orgID string, listOptions *EventListOptions) (*EventResponse, *Response, error) {
 	if orgID == "" {
@@ -102,6 +120,7 @@ func (s *EventsServiceOp) ListOrganizationEvents(ctx context.Context, orgID stri
 }
 
 // GetOrganizationEvent gets the alert specified to {EVENT-ID} from the organization associated to {ORG-ID}.
+//
 // See more: https://docs.opsmanager.mongodb.com/current/reference/api/events/get-one-event-for-org/
 func (s *EventsServiceOp) GetOrganizationEvent(ctx context.Context, orgID, eventID string) (*Event, *Response, error) {
 	if orgID == "" {
@@ -128,6 +147,7 @@ func (s *EventsServiceOp) GetOrganizationEvent(ctx context.Context, orgID, event
 }
 
 // ListProjectEvents lists all events in the project associated to {PROJECT-ID}.
+//
 // See more: https://docs.opsmanager.mongodb.com/current/reference/api/events/get-all-events-for-project/
 func (s *EventsServiceOp) ListProjectEvents(ctx context.Context, groupID string, listOptions *EventListOptions) (*EventResponse, *Response, error) {
 	if groupID == "" {
@@ -156,6 +176,7 @@ func (s *EventsServiceOp) ListProjectEvents(ctx context.Context, groupID string,
 }
 
 // GetProjectEvent gets the alert specified to {EVENT-ID} from the project associated to {PROJECT-ID}.
+//
 // See more: https://docs.opsmanager.mongodb.com/current/reference/api/events/get-one-event-for-project/
 func (s *EventsServiceOp) GetProjectEvent(ctx context.Context, groupID, eventID string) (*Event, *Response, error) {
 	if groupID == "" {

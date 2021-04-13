@@ -1,6 +1,6 @@
 SOURCE_FILES?=./...
 PKG_NAME=mongodbatlas
-GOLANGCI_VERSION=v1.30.0
+GOLANGCI_VERSION=v1.39.0
 COVERAGE=coverage.out
 
 export GO111MODULE := on
@@ -41,6 +41,10 @@ check: test lint-fix
 .PHONY: tools
 tools:
 	curl -sSfL https://raw.githubusercontent.com/golangci/golangci-lint/master/install.sh | sh -s $(GOLANGCI_VERSION)
+
+.PHONY: addcopy
+addcopy:
+	@scripts/add-copy.sh
 
 TAG=$(patsubst v%,%,$(shell git describe --tags --dirty --always))
 .PHONY: check-version

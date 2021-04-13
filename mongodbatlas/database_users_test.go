@@ -1,3 +1,17 @@
+// Copyright 2021 MongoDB Inc
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//      http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+
 package mongodbatlas
 
 import (
@@ -154,6 +168,7 @@ func TestDatabaseUsers_CreateWithX509Type(t *testing.T) {
 			DatabaseName: "admin",
 			RoleName:     "readWriteAnyDatabase",
 		}},
+		Scopes: []Scope{},
 	}
 
 	mux.HandleFunc(fmt.Sprintf("/groups/%s/databaseUsers", groupID), func(w http.ResponseWriter, r *http.Request) {
@@ -167,6 +182,7 @@ func TestDatabaseUsers_CreateWithX509Type(t *testing.T) {
 				"databaseName": "admin",
 				"roleName":     "readWriteAnyDatabase",
 			}},
+			"scopes": []interface{}{},
 		}
 
 		var v map[string]interface{}
@@ -189,7 +205,8 @@ func TestDatabaseUsers_CreateWithX509Type(t *testing.T) {
 					"databaseName": "admin",
 					"roleName": "readWriteAnyDatabase"
 				}
-			]
+			],
+			"scopes" : []
 		}`)
 	})
 
@@ -220,6 +237,7 @@ func TestDatabaseUsers_CreateWithAWSIAMType(t *testing.T) {
 			DatabaseName: "admin",
 			RoleName:     "readWriteAnyDatabase",
 		}},
+		Scopes: []Scope{},
 	}
 
 	mux.HandleFunc(fmt.Sprintf("/groups/%s/databaseUsers", groupID), func(w http.ResponseWriter, r *http.Request) {
@@ -233,6 +251,7 @@ func TestDatabaseUsers_CreateWithAWSIAMType(t *testing.T) {
 				"databaseName": "admin",
 				"roleName":     "readWriteAnyDatabase",
 			}},
+			"scopes": []interface{}{},
 		}
 
 		var v map[string]interface{}
@@ -255,7 +274,8 @@ func TestDatabaseUsers_CreateWithAWSIAMType(t *testing.T) {
 					"databaseName": "admin",
 					"roleName": "readWriteAnyDatabase"
 				}
-			]
+			],
+			"scopes" : []
 		}`)
 	})
 
@@ -287,6 +307,7 @@ func TestDatabaseUsers_Create(t *testing.T) {
 			CollectionName: "test-collection-name",
 			RoleName:       "test-role-name",
 		}},
+		Scopes: []Scope{},
 	}
 
 	mux.HandleFunc(fmt.Sprintf("/groups/%s/databaseUsers", groupID), func(w http.ResponseWriter, r *http.Request) {
@@ -300,6 +321,7 @@ func TestDatabaseUsers_Create(t *testing.T) {
 				"collectionName": "test-collection-name",
 				"roleName":       "test-role-name",
 			}},
+			"scopes": []interface{}{},
 		}
 
 		jsonBlob := `
@@ -314,7 +336,8 @@ func TestDatabaseUsers_Create(t *testing.T) {
 					"collectionName": "test-collection-name",
 					"roleName": "test-role-name"
 				}
-			]
+			],
+			"scopes": []
 		}
 		`
 
@@ -471,6 +494,7 @@ func TestDatabaseUsers_Update(t *testing.T) {
 			CollectionName: "test-collection-name",
 			RoleName:       "test-role-name",
 		}},
+		Scopes: []Scope{},
 	}
 
 	mux.HandleFunc(fmt.Sprintf("/groups/%s/databaseUsers/admin/%s", groupID, "test-username"), func(w http.ResponseWriter, r *http.Request) {
@@ -484,6 +508,7 @@ func TestDatabaseUsers_Update(t *testing.T) {
 				"collectionName": "test-collection-name",
 				"roleName":       "test-role-name",
 			}},
+			"scopes": []interface{}{},
 		}
 
 		jsonBlob := `
@@ -498,7 +523,8 @@ func TestDatabaseUsers_Update(t *testing.T) {
 					"collectionName": "test-collection-name",
 					"roleName": "test-role-name"
 				}
-			]
+			],
+			"scopes" : []
 		}
 		`
 

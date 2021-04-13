@@ -1,3 +1,17 @@
+// Copyright 2021 MongoDB Inc
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//      http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+
 package mongodbatlas
 
 import (
@@ -22,6 +36,7 @@ func TestEncryptionsAtRest_Create(t *testing.T) {
 			SecretAccessKey:     "wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY",
 			CustomerMasterKeyID: "030gce02-586d-48d2-a966-05ea954fde0g",
 			Region:              CaCentral1,
+			RoleID:              "5f232b94af0a6b41747bcc2d",
 		},
 		AzureKeyVault: AzureKeyVault{
 			Enabled:           pointy.Bool(true),
@@ -49,6 +64,7 @@ func TestEncryptionsAtRest_Create(t *testing.T) {
 				"secretAccessKey":     "wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY",
 				"customerMasterKeyID": "030gce02-586d-48d2-a966-05ea954fde0g",
 				"region":              CaCentral1,
+				"roleId":              "5f232b94af0a6b41747bcc2d",
 			},
 			"azureKeyVault": map[string]interface{}{
 				"enabled":           true,
@@ -83,7 +99,9 @@ func TestEncryptionsAtRest_Create(t *testing.T) {
 				"enabled": true,
 				"accessKeyID": "AKIAIOSFODNN7EXAMPLE",
 				"customerMasterKeyID": "030gce02-586d-48d2-a966-05ea954fde0g",
-				"region": "US_EAST_1"
+				"region": "US_EAST_1",
+				"roleId": "5f232b94af0a6b41747bcc2d",
+				"valid": true
 			},
 			"azureKeyVault": {
 				"enabled": true,
@@ -113,6 +131,8 @@ func TestEncryptionsAtRest_Create(t *testing.T) {
 			AccessKeyID:         "AKIAIOSFODNN7EXAMPLE",
 			CustomerMasterKeyID: "030gce02-586d-48d2-a966-05ea954fde0g",
 			Region:              "US_EAST_1",
+			RoleID:              "5f232b94af0a6b41747bcc2d",
+			Valid:               pointy.Bool(true),
 		},
 		AzureKeyVault: AzureKeyVault{
 			Enabled:           pointy.Bool(true),
@@ -148,7 +168,9 @@ func TestEncryptionsAtRest_Get(t *testing.T) {
 				"enabled": true,
 				"accessKeyID": "AKIAIOSFODNN7EXAMPLE",
 				"customerMasterKeyID": "030gce02-586d-48d2-a966-05ea954fde0g",
-				"region": "US_EAST_1"
+				"region": "US_EAST_1",
+				"roleId": "5f232b94af0a6b41747bcc2d",
+				"valid": true
 			},
 			"azureKeyVault": {
 				"enabled": true,
@@ -178,6 +200,8 @@ func TestEncryptionsAtRest_Get(t *testing.T) {
 			AccessKeyID:         "AKIAIOSFODNN7EXAMPLE",
 			CustomerMasterKeyID: "030gce02-586d-48d2-a966-05ea954fde0g",
 			Region:              "US_EAST_1",
+			RoleID:              "5f232b94af0a6b41747bcc2d",
+			Valid:               pointy.Bool(true),
 		},
 		AzureKeyVault: AzureKeyVault{
 			Enabled:           pointy.Bool(true),

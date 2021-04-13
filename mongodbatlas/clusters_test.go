@@ -1,3 +1,17 @@
+// Copyright 2021 MongoDB Inc
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//      http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+
 package mongodbatlas
 
 import (
@@ -42,7 +56,21 @@ func TestClusters_ListClusters(t *testing.T) {
 							"vpce-0d00c26273372c6ef": "mongodb+srv://cluster0-pl-0-auylw.mongodb.net"
 						},
 						"private": "mongodb://cluster0-shard-00-00-pri.auylw.mongodb.net:27017,cluster0-shard-00-01-pri.auylw.mongodb.net:27017,cluster0-shard-00-02-pri.auylw.mongodb.net:27017/?ssl=true&authSource=admin&replicaSet=Cluster0-shard-0",
-						"privateSrv": "mongodb+srv://cluster0-pri.auylw.mongodb.net"
+						"privateSrv": "mongodb+srv://cluster0-pri.auylw.mongodb.net",
+						"privateEndpoint": [
+						 {
+						  "connectionString": "mongodb://pl-0-us-east-1-auylw.mongodb.net:1024,pl-0-us-east-1-auylw.mongodb.net:1025,pl-0-us-east-1-auylw.mongodb.net:1026/?ssl=true&authSource=admin&replicaSet=Cluster0-shard-0-shard-0",
+						  "endpoints": [
+						   {
+							"endpointId": "vpce-0d00c26273372c6ef",
+							"providerName": "AWS",
+							"region": "US_EAST_1"
+						   }
+						  ],
+						  "srvConnectionString": "mongodb+srv://cluster0-pl-0-auylw.mongodb.net",
+						  "type": "MONGOD"
+						 }
+						]
 					},
 					"diskSizeGB": 160,
 					"encryptionAtRestProvider": "AWS",
@@ -102,7 +130,21 @@ func TestClusters_ListClusters(t *testing.T) {
 							"vpce-0d00c26273372c6ef": "mongodb+srv://cluster0-pl-0-auylw.mongodb.net"
 						},
 						"private": "mongodb://cluster0-shard-00-00-pri.auylw.mongodb.net:27017,cluster0-shard-00-01-pri.auylw.mongodb.net:27017,cluster0-shard-00-02-pri.auylw.mongodb.net:27017/?ssl=true&authSource=admin&replicaSet=Cluster0-shard-0",
-						"privateSrv": "mongodb+srv://cluster0-pri.auylw.mongodb.net"
+						"privateSrv": "mongodb+srv://cluster0-pri.auylw.mongodb.net",
+						"privateEndpoint": [
+						 {
+						  "connectionString": "mongodb://pl-0-us-east-1-auylw.mongodb.net:1024,pl-0-us-east-1-auylw.mongodb.net:1025,pl-0-us-east-1-auylw.mongodb.net:1026/?ssl=true&authSource=admin&replicaSet=Cluster0-shard-0-shard-0",
+						  "endpoints": [
+						   {
+							"endpointId": "vpce-0d00c26273372c6ef",
+							"providerName": "AWS",
+							"region": "US_EAST_1"
+						   }
+						  ],
+						  "srvConnectionString": "mongodb+srv://cluster0-pl-0-auylw.mongodb.net",
+						  "type": "MONGOD"
+						 }
+						]
 					},
 					"diskSizeGB": 160,
 					"encryptionAtRestProvider": "AWS",
@@ -166,6 +208,20 @@ func TestClusters_ListClusters(t *testing.T) {
 			AwsPrivateLinkSrv: map[string]string{"vpce-0d00c26273372c6ef": "mongodb+srv://cluster0-pl-0-auylw.mongodb.net"},
 			Private:           "mongodb://cluster0-shard-00-00-pri.auylw.mongodb.net:27017,cluster0-shard-00-01-pri.auylw.mongodb.net:27017,cluster0-shard-00-02-pri.auylw.mongodb.net:27017/?ssl=true&authSource=admin&replicaSet=Cluster0-shard-0",
 			PrivateSrv:        "mongodb+srv://cluster0-pri.auylw.mongodb.net",
+			PrivateEndpoint: []PrivateEndpoint{
+				{
+					ConnectionString:    "mongodb://pl-0-us-east-1-auylw.mongodb.net:1024,pl-0-us-east-1-auylw.mongodb.net:1025,pl-0-us-east-1-auylw.mongodb.net:1026/?ssl=true&authSource=admin&replicaSet=Cluster0-shard-0-shard-0",
+					SRVConnectionString: "mongodb+srv://cluster0-pl-0-auylw.mongodb.net",
+					Type:                "MONGOD",
+					Endpoints: []Endpoint{
+						{
+							EndpointID:   "vpce-0d00c26273372c6ef",
+							Region:       "US_EAST_1",
+							ProviderName: "AWS",
+						},
+					},
+				},
+			},
 		},
 
 		DiskSizeGB:               pointy.Float64(160),
@@ -806,7 +862,21 @@ func TestClusters_Get(t *testing.T) {
 					"vpce-0d00c26273372c6ef": "mongodb+srv://cluster0-pl-0-auylw.mongodb.net"
 				},
 				"private": "mongodb://cluster0-shard-00-00-pri.auylw.mongodb.net:27017,cluster0-shard-00-01-pri.auylw.mongodb.net:27017,cluster0-shard-00-02-pri.auylw.mongodb.net:27017/?ssl=true&authSource=admin&replicaSet=Cluster0-shard-0",
-				"privateSrv": "mongodb+srv://cluster0-pri.auylw.mongodb.net"
+				"privateSrv": "mongodb+srv://cluster0-pri.auylw.mongodb.net",
+				"privateEndpoint": [
+				 {
+				  "connectionString": "mongodb://pl-0-us-east-1-auylw.mongodb.net:1024,pl-0-us-east-1-auylw.mongodb.net:1025,pl-0-us-east-1-auylw.mongodb.net:1026/?ssl=true&authSource=admin&replicaSet=Cluster0-shard-0-shard-0",
+				  "endpoints": [
+				   {
+					"endpointId": "vpce-0d00c26273372c6ef",
+					"providerName": "AWS",
+					"region": "US_EAST_1"
+				   }
+				  ],
+				  "srvConnectionString": "mongodb+srv://cluster0-pl-0-auylw.mongodb.net",
+				  "type": "MONGOD"
+				 }
+				]
 			},
             "diskSizeGB": 160,
             "encryptionAtRestProvider": "AWS",
@@ -857,6 +927,20 @@ func TestClusters_Get(t *testing.T) {
 			AwsPrivateLinkSrv: map[string]string{"vpce-0d00c26273372c6ef": "mongodb+srv://cluster0-pl-0-auylw.mongodb.net"},
 			Private:           "mongodb://cluster0-shard-00-00-pri.auylw.mongodb.net:27017,cluster0-shard-00-01-pri.auylw.mongodb.net:27017,cluster0-shard-00-02-pri.auylw.mongodb.net:27017/?ssl=true&authSource=admin&replicaSet=Cluster0-shard-0",
 			PrivateSrv:        "mongodb+srv://cluster0-pri.auylw.mongodb.net",
+			PrivateEndpoint: []PrivateEndpoint{
+				{
+					ConnectionString:    "mongodb://pl-0-us-east-1-auylw.mongodb.net:1024,pl-0-us-east-1-auylw.mongodb.net:1025,pl-0-us-east-1-auylw.mongodb.net:1026/?ssl=true&authSource=admin&replicaSet=Cluster0-shard-0-shard-0",
+					SRVConnectionString: "mongodb+srv://cluster0-pl-0-auylw.mongodb.net",
+					Type:                "MONGOD",
+					Endpoints: []Endpoint{
+						{
+							EndpointID:   "vpce-0d00c26273372c6ef",
+							Region:       "US_EAST_1",
+							ProviderName: "AWS",
+						},
+					},
+				},
+			},
 		},
 		DiskSizeGB:               pointy.Float64(160),
 		EncryptionAtRestProvider: "AWS",
@@ -890,6 +974,100 @@ func TestClusters_Get(t *testing.T) {
 	}
 
 	if diff := deep.Equal(cluster, expected); diff != nil {
+		t.Error(diff)
+	}
+}
+
+func TestClusters_Status(t *testing.T) {
+	client, mux, teardown := setup()
+	defer teardown()
+
+	groupID := "1"
+	clusterName := "appData"
+
+	mux.HandleFunc(fmt.Sprintf("/groups/%s/clusters/%s/status", groupID, clusterName), func(w http.ResponseWriter, r *http.Request) {
+		testMethod(t, r, http.MethodGet)
+		fmt.Fprint(w, `{ "changeStatus": "PENDING" }`)
+	})
+
+	status, _, err := client.Clusters.Status(ctx, groupID, clusterName)
+	if err != nil {
+		t.Fatalf("Clusters.Status returned error: %v", err)
+	}
+
+	expected := ClusterStatus{ChangeStatus: ChangeStatusPending}
+
+	if status != expected {
+		t.Errorf("Expected %v but got %v", expected, status)
+	}
+}
+
+func TestClusters_LoadSampleDataset(t *testing.T) {
+	client, mux, teardown := setup()
+	defer teardown()
+
+	groupID := "1"
+	clusterName := "appData"
+
+	mux.HandleFunc(fmt.Sprintf("/groups/%s/sampleDatasetLoad/%s", groupID, clusterName), func(w http.ResponseWriter, r *http.Request) {
+		testMethod(t, r, http.MethodPost)
+		fmt.Fprint(w, `{ 
+							 "_id": "1",
+							  "clusterName": "appData",
+							  "completeDate": null,
+							  "createDate": "2021-03-26T16:30:47Z",
+							  "errorMessage": null,
+							  "state": "WORKING"}`)
+	})
+
+	job, _, err := client.Clusters.LoadSampleDataset(ctx, groupID, clusterName)
+	if err != nil {
+		t.Fatalf("Clusters.LoadSampleDataset returned error: %v", err)
+	}
+
+	expected := &SampleDatasetJob{
+		ClusterName: clusterName,
+		CreateDate:  "2021-03-26T16:30:47Z",
+		ID:          "1",
+		State:       "WORKING",
+	}
+
+	if diff := deep.Equal(job, expected); diff != nil {
+		t.Error(diff)
+	}
+}
+
+func TestClusters_GetSampleDatasetStatus(t *testing.T) {
+	client, mux, teardown := setup()
+	defer teardown()
+
+	groupID := "1"
+	jobID := "1"
+
+	mux.HandleFunc(fmt.Sprintf("/groups/%s/sampleDatasetLoad/%s", groupID, jobID), func(w http.ResponseWriter, r *http.Request) {
+		testMethod(t, r, http.MethodGet)
+		fmt.Fprint(w, `{ 
+							 "_id": "1",
+							  "clusterName": "appData",
+							  "completeDate": null,
+							  "createDate": "2021-03-26T16:30:47Z",
+							  "errorMessage": null,
+							  "state": "WORKING"}`)
+	})
+
+	job, _, err := client.Clusters.GetSampleDatasetStatus(ctx, groupID, jobID)
+	if err != nil {
+		t.Fatalf("Clusters.GetSampleDatasetStatus returned error: %v", err)
+	}
+
+	expected := &SampleDatasetJob{
+		ClusterName: "appData",
+		CreateDate:  "2021-03-26T16:30:47Z",
+		ID:          "1",
+		State:       "WORKING",
+	}
+
+	if diff := deep.Equal(job, expected); diff != nil {
 		t.Error(diff)
 	}
 }

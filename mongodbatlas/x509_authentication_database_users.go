@@ -1,3 +1,17 @@
+// Copyright 2021 MongoDB Inc
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//      http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+
 package mongodbatlas
 
 import (
@@ -11,6 +25,7 @@ const x509AuthDBUsersPath = "groups/%s/databaseUsers/%s/certs"
 const x509CustomerAuthDBUserPath = "groups/%s/userSecurity"
 
 // X509AuthDBUsersService is an interface for interfacing with the x509 Authentication Database Users.
+//
 // See more: https://docs.atlas.mongodb.com/reference/api/x509-configuration/
 type X509AuthDBUsersService interface {
 	CreateUserCertificate(context.Context, string, string, int) (*UserCertificate, *Response, error)
@@ -57,6 +72,7 @@ type CustomerX509 struct {
 }
 
 // CreateUserCertificate generates an Atlas-managed X.509 certificate for a MongoDB user that authenticates using X.509 certificates.
+//
 // See more: https://docs.atlas.mongodb.com/reference/api/x509-configuration-create-certificate/
 func (s *X509AuthDBUsersServiceOp) CreateUserCertificate(ctx context.Context, groupID, username string, monthsUntilExpiration int) (*UserCertificate, *Response, error) {
 	if groupID == "" {
@@ -93,6 +109,7 @@ func (s *X509AuthDBUsersServiceOp) CreateUserCertificate(ctx context.Context, gr
 }
 
 // GetUserCertificates gets a list of all Atlas-managed, unexpired certificates for a user.
+//
 // See more: https://docs.atlas.mongodb.com/reference/api/x509-configuration-get-certificates/
 func (s *X509AuthDBUsersServiceOp) GetUserCertificates(ctx context.Context, groupID, username string) ([]UserCertificate, *Response, error) {
 	if groupID == "" {
@@ -123,6 +140,7 @@ func (s *X509AuthDBUsersServiceOp) GetUserCertificates(ctx context.Context, grou
 }
 
 // SaveConfiguration saves a customer-managed X.509 configuration for an Atlas project.
+//
 // See more: https://docs.atlas.mongodb.com/reference/api/x509-configuration-save/
 func (s *X509AuthDBUsersServiceOp) SaveConfiguration(ctx context.Context, groupID string, customerX509 *CustomerX509) (*CustomerX509, *Response, error) {
 	if groupID == "" {
@@ -149,6 +167,7 @@ func (s *X509AuthDBUsersServiceOp) SaveConfiguration(ctx context.Context, groupI
 }
 
 // GetCurrentX509Conf gets the current customer-managed X.509 configuration details for an Atlas project.
+//
 // See more: https://docs.atlas.mongodb.com/reference/api/x509-configuration-get-current/
 func (s *X509AuthDBUsersServiceOp) GetCurrentX509Conf(ctx context.Context, groupID string) (*CustomerX509, *Response, error) {
 	if groupID == "" {
@@ -172,6 +191,7 @@ func (s *X509AuthDBUsersServiceOp) GetCurrentX509Conf(ctx context.Context, group
 }
 
 // DisableCustomerX509 clears customer-managed X.509 settings on a project. This disables customer-managed X.509.
+//
 // See more: https://docs.atlas.mongodb.com/reference/api/x509-configuration-disable-advanced/
 func (s *X509AuthDBUsersServiceOp) DisableCustomerX509(ctx context.Context, groupID string) (*Response, error) {
 	if groupID == "" {

@@ -1,3 +1,17 @@
+// Copyright 2021 MongoDB Inc
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//      http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+
 package mongodbatlas
 
 import (
@@ -12,6 +26,7 @@ const (
 
 // CloudProviderSnapshotBackupPoliciesService is an interface for interfacing with the Cloud Provider Snapshots Backup Policy
 // endpoints of the MongoDB Atlas API.
+//
 // See more: https://docs.atlas.mongodb.com/reference/api/cloud-provider-snapshot-schedule/
 type CloudProviderSnapshotBackupPoliciesService interface {
 	Get(context.Context, string, string) (*CloudProviderSnapshotBackupPolicy, *Response, error)

@@ -1,3 +1,17 @@
+// Copyright 2021 MongoDB Inc
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//      http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+
 package mongodbatlas
 
 import (
@@ -34,7 +48,8 @@ func TestProcesses_ListProcesses(t *testing.T) {
 						"replicaSetName": "replica-set-0",
 						"shardName": "shard-0",
 						"typeName": "REPLICA_PRIMARY",
-						"version": "3.6.7"
+						"version": "3.6.7",
+						"userAlias": "zuul"
 					},
 					{
 						"created": "2017-08-22T15:14:06Z",
@@ -52,7 +67,8 @@ func TestProcesses_ListProcesses(t *testing.T) {
 						"replicaSetName": "replica-set-0",
 						"shardName": "shard-0",
 						"typeName": "REPLICA_PRIMARY",
-						"version": "3.6.7"
+						"version": "3.6.7",
+						"userAlias": "zuul"
 					}
 				],
 				"totalCount": 2
@@ -82,6 +98,7 @@ func TestProcesses_ListProcesses(t *testing.T) {
 		ReplicaSetName: "replica-set-0",
 		TypeName:       "REPLICA_PRIMARY",
 		Version:        "3.6.7",
+		UserAlias:      "zuul",
 	}
 
 	expected := []*Process{&process, &process}
@@ -116,6 +133,7 @@ func TestProcesses_ListProcessesMultiplePages(t *testing.T) {
 					ReplicaSetName: "replica-set-0",
 					TypeName:       "REPLICA_PRIMARY",
 					Version:        "3.6.7",
+					UserAlias:      "zuul",
 				},
 				{
 					Created:  "2017-08-22T15:14:06Z",
@@ -134,6 +152,7 @@ func TestProcesses_ListProcessesMultiplePages(t *testing.T) {
 					ReplicaSetName: "replica-set-0",
 					TypeName:       "REPLICA_PRIMARY",
 					Version:        "3.6.7",
+					UserAlias:      "zuul",
 				},
 			},
 			Links: []*Link{
@@ -194,7 +213,8 @@ func TestProcesses_RetrievePageByNumber(t *testing.T) {
 					"replicaSetName": "replica-set-0",
 					"shardName": "shard-0",
 					"typeName": "REPLICA_PRIMARY",
-					"version": "3.6.7"
+					"version": "3.6.7",
+					"userAlias": "zuul"
 				}
 			],
 			"totalCount": 1

@@ -1,3 +1,17 @@
+// Copyright 2021 MongoDB Inc
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//      http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+
 package mongodbatlas
 
 import (
@@ -62,6 +76,16 @@ func TestCloudProviderSnapshotRestoreJobs_List(t *testing.T) {
 				{
 					"cancelled": false,
 					"createdAt": "2018-08-01T22:05:41Z",
+					"components": [
+						{
+							"downloadUrl": "https://restore.mongodb.net:27017/restore-5b622e3587d9d6039faf713f-config.tar.gz",
+							"replicaSetName": "atlas-abcdef-config-0"
+						},
+						{
+							"downloadUrl": "https://restore.mongodb.net:27017/restore-5b622e3587d9d6039faf713f.tar.gz",
+							"replicaSetName": "atlas-abcdef-shard-0"
+						}
+					],
 					"deliveryType": "download",
 					"deliveryUrl": ["https://restore.mongodb.net:27017/restore-5b622e3587d9d6039faf713f.tar.gz"],
 					"expired": false,
@@ -90,6 +114,7 @@ func TestCloudProviderSnapshotRestoreJobs_List(t *testing.T) {
 					"oplogTs":	1583753751,
 					"oplogInc":	1
 				}
+
 			],
 			"totalCount": 2
 		}`)
@@ -138,8 +163,18 @@ func TestCloudProviderSnapshotRestoreJobs_List(t *testing.T) {
 				Timestamp:         "2018-08-01T20:02:07Z",
 			},
 			{
-				Cancelled:    false,
-				CreatedAt:    "2018-08-01T22:05:41Z",
+				Cancelled: false,
+				CreatedAt: "2018-08-01T22:05:41Z",
+				Components: []*Component{
+					{
+						DownloadURL:    "https://restore.mongodb.net:27017/restore-5b622e3587d9d6039faf713f-config.tar.gz",
+						ReplicaSetName: "atlas-abcdef-config-0",
+					},
+					{
+						DownloadURL:    "https://restore.mongodb.net:27017/restore-5b622e3587d9d6039faf713f.tar.gz",
+						ReplicaSetName: "atlas-abcdef-shard-0",
+					},
+				},
 				DeliveryType: "download",
 				DeliveryURL:  []string{"https://restore.mongodb.net:27017/restore-5b622e3587d9d6039faf713f.tar.gz"},
 				Expired:      false,

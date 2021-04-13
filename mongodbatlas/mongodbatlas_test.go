@@ -1,3 +1,17 @@
+// Copyright 2021 MongoDB Inc
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//      http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+
 package mongodbatlas
 
 import (
@@ -49,7 +63,7 @@ func setup() (client *Client, mux *http.ServeMux, teardown func()) {
 	// server is a test HTTP server used to provide mock API responses.
 	server := httptest.NewServer(apiHandler)
 
-	// client is the GitHub client being tested and is
+	// client is the Atlas client being tested and is
 	// configured to use test server.
 	client = NewClient(nil)
 	u, _ := url.Parse(server.URL + baseURLPath + "/")
@@ -219,7 +233,7 @@ func TestNewGZipRequest_emptyBody(t *testing.T) {
 	c := NewClient(nil)
 	req, err := c.NewGZipRequest(ctx, http.MethodGet, ".")
 	if err != nil {
-		t.Fatalf("NewRequest returned unexpected error: %v", err)
+		t.Fatalf("NewGZipRequest returned unexpected error: %v", err)
 	}
 	if req.Body != nil {
 		t.Fatalf("constructed request contains a non-nil Body")
@@ -238,7 +252,7 @@ func TestNewGZipRequest_withCustomUserAgent(t *testing.T) {
 
 	expected := fmt.Sprintf("%s %s", ua, userAgent)
 	if got := req.Header.Get("User-Agent"); got != expected {
-		t.Errorf("New() UserAgent = %s; expected %s", got, expected)
+		t.Errorf("NewGZipRequest() UserAgent = %s; expected %s", got, expected)
 	}
 }
 
@@ -271,6 +285,65 @@ func TestNewGZipRequest(t *testing.T) {
 	uA := req.Header.Get("User-Agent")
 	if c.UserAgent != uA {
 		t.Errorf("NewGZipRequest() User-Agent = %v, expected %v", uA, c.UserAgent)
+	}
+}
+
+func TestNewPlainRequest_emptyBody(t *testing.T) {
+	c := NewClient(nil)
+	req, err := c.NewPlainRequest(ctx, http.MethodGet, ".")
+	if err != nil {
+		t.Fatalf("NewPlainRequest returned unexpected error: %v", err)
+	}
+	if req.Body != nil {
+		t.Fatalf("constructed request contains a non-nil Body")
+	}
+}
+
+func TestNewPlainRequest_withCustomUserAgent(t *testing.T) {
+	ua := fmt.Sprintf("testing/%s", Version)
+	c, err := New(nil, SetUserAgent(ua))
+
+	if err != nil {
+		t.Fatalf("New() unexpected error: %v", err)
+	}
+
+	req, _ := c.NewPlainRequest(ctx, http.MethodGet, "/foo")
+
+	expected := fmt.Sprintf("%s %s", ua, userAgent)
+	if got := req.Header.Get("User-Agent"); got != expected {
+		t.Errorf("NewPlainRequest() UserAgent = %s; expected %s", got, expected)
+	}
+}
+
+func TestNewPlainRequest_badURL(t *testing.T) {
+	c := NewClient(nil)
+	_, err := c.NewPlainRequest(ctx, http.MethodGet, ":")
+	testURLParseError(t, err)
+}
+
+func TestNewPlainRequest(t *testing.T) {
+	c := NewClient(nil)
+
+	requestPath := "foo"
+
+	inURL, outURL := requestPath, defaultBaseURL+requestPath
+	req, _ := c.NewPlainRequest(ctx, http.MethodGet, inURL)
+
+	// test relative URL was expanded
+	if req.URL.String() != outURL {
+		t.Errorf("NewPlainRequest(%v) URL = %v, expected %v", inURL, req.URL, outURL)
+	}
+
+	// test accept content type is correct
+	accept := req.Header.Get("Accept")
+	if plainMediaType != accept {
+		t.Errorf("NewPlainRequest() Accept = %v, expected %v", accept, gzipMediaType)
+	}
+
+	// test default user-agent is attached to the request
+	uA := req.Header.Get("User-Agent")
+	if c.UserAgent != uA {
+		t.Errorf("NewPlainRequest() User-Agent = %v, expected %v", uA, c.UserAgent)
 	}
 }
 
@@ -360,7 +433,11 @@ func TestCheckResponse(t *testing.T) {
 	res := &http.Response{
 		Request:    &http.Request{},
 		StatusCode: http.StatusBadRequest,
-		Body:       ioutil.NopCloser(strings.NewReader(`{"error":400, "reason":"r", "detail":"d"}`)),
+		Body: ioutil.NopCloser(
+			strings.NewReader(
+				`{"error":409, "errorCode": "GROUP_ALREADY_EXISTS", "reason":"Conflict", "detail":"A group with name \"Test\" already exists"}`,
+			),
+		),
 	}
 	err := CheckResponse(res).(*ErrorResponse)
 
@@ -370,9 +447,10 @@ func TestCheckResponse(t *testing.T) {
 
 	expected := &ErrorResponse{
 		Response:  res,
-		ErrorCode: 400,
-		Reason:    "r",
-		Detail:    "d",
+		HTTPCode:  409,
+		ErrorCode: "GROUP_ALREADY_EXISTS",
+		Reason:    "Conflict",
+		Detail:    `A group with name "Test" already exists`,
 	}
 	if !reflect.DeepEqual(err, expected) {
 		t.Errorf("Error = %#v, expected %#v", err, expected)
